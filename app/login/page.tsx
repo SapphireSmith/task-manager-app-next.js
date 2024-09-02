@@ -5,44 +5,35 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 
 const Page = () => {
-    const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [confirmPassword, setConfirmPassword] = useState<string>('');
-    const [error, setError] = useState<string>('');
+    const [message,setMessage] = useState<string>('');
 
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (password !== confirmPassword) {
-            setError("Entered password didn't match");
-            return;
-        } else {
-            setError('');
-        }
-
         const userData = {
-            name,
             email,
             password,
-            confirmPassword
         };
 
         try {
-            const response = await axios.post("/api/register", userData);
+            const response = await axios.post("/api/login", userData);
+
             console.log(response);
             
-            if (response.status === 201) {
-                console.log('Registration successful:', response.data);
-                router.push('/login');
+            
+            if (response.status === 200) {
+                console.log('login successful:', response.data);
+                router.push('/');
             } else {
-                setError(response.data.message);
-                console.error('Registration failed:', response.statusText);
+                setMessage(response.data.message);
+                console.error('login failed:', response.statusText);
             }
         } catch (error: any) {
-            setError(error.response?.data?.message || 'An error occurred');
+            setMessage(error.response?.data?.message || 'An error occurred');
             console.error('An error occurred', error.response?.data?.message || error.message);
         }
     };
@@ -57,33 +48,16 @@ const Page = () => {
                         className="mx-auto h-10 w-auto"
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Create an account
+                        Login to account
                     </h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <p className={` pb-5 italic ${error === 'Registration Completed' ? "text-green-500" : "text-red-500"}`}>{error}</p>
+                    <p className={` pb-5 italic ${message === 'Logged in' ? "text-green-500" : "text-red-500"}`}>{message}</p>
                     <form action="#" method="POST" className="space-y-6" onSubmit={handleSubmit}>
                         <div>
-                            <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                                Your Name
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="name"
-                                    name="name"
-                                    type="text"
-                                    required
-                                    autoComplete="name"
-                                    className="block p-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                Email address
+                                Email
                             </label>
                             <div className="mt-2">
                                 <input
@@ -118,25 +92,6 @@ const Page = () => {
                                 />
                             </div>
                         </div>
-                        <div>
-                            <div className="flex items-center justify-between">
-                                <label htmlFor="confirm_password" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Confirm Password
-                                </label>
-                            </div>
-                            <div className="mt-2">
-                                <input
-                                    id="confirm_password"
-                                    name="confirm-password"
-                                    type="password"
-                                    required
-                                    autoComplete="current-password"
-                                    className="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    value={confirmPassword}
-                                    onChange={e => setConfirmPassword(e.target.value)}
-                                />
-                            </div>
-                        </div>
 
                         <div>
                             <button
@@ -149,8 +104,8 @@ const Page = () => {
                     </form>
 
                     <p className="mt-10 text-center text-sm text-gray-500">
-                        Have an account?{' '}
-                        <Link href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                        Don't have an account?{' '}
+                        <Link href="/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                             Click here
                         </Link>
                     </p>
