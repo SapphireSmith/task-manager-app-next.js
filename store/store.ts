@@ -1,6 +1,6 @@
 // store/useAuthStore.ts
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import Cookies from 'js-cookie';
 
 interface AuthState {
     token: string | null;
@@ -8,16 +8,13 @@ interface AuthState {
     clearToken: () => void;
 }
 
-export const useAuthStore = create<AuthState>()(
-    persist(
-        (set) => ({
-            token: null,
-            setToken: (token) => set({ token }),
-            clearToken: () => set({ token: null }),
-        }),
-        {
-            name: 'auth-storage',
-            getStorage: () => localStorage,
-        }
-    )
-);
+const useAuthStore = create<AuthState>((set) => ({
+    token: null,
+    setToken: (token) => set({ token }),
+    clearToken: () => {
+        Cookies.remove('authToken');
+        set({ token: null });
+    },
+}));
+
+export default useAuthStore;

@@ -2,7 +2,11 @@
 const nextConfig = {
 
     images: {
-        domains: ['img.icons8.com'],
+        domains:
+            [
+                'img.icons8.com',
+                'avatar.iran.liara.run'
+            ],
     },
 
 };

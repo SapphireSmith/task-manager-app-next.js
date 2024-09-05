@@ -1,8 +1,9 @@
 import React from 'react'
-import Image from 'next/image'
 import dynamic from 'next/dynamic'
-const NavLogin = dynamic(() => import('./NavLogin'), { ssr: false })
-import Link from 'next/link'
+import Image from 'next/image'
+import NavLogin from './NavLogin';
+import Link from 'next/link';
+
 const NavBar = () => {
 
   return (

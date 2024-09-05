@@ -3,6 +3,7 @@ import axios from 'axios';
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
+import useAuth from '@/hooks/useAuth';
 
 const Page = () => {
     const [email, setEmail] = useState<string>('');
@@ -10,6 +11,8 @@ const Page = () => {
     const [message,setMessage] = useState<string>('');
 
     const router = useRouter();
+
+    useAuth(); // authentication hook
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -26,7 +29,7 @@ const Page = () => {
             
             
             if (response.status === 200) {
-                console.log('login successful:', response.data);
+                console.log('login successful:', response);
                 router.push('/');
             } else {
                 setMessage(response.data.message);
