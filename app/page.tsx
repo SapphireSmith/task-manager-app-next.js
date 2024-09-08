@@ -5,7 +5,7 @@ import useAuth from '@/hooks/useAuth';
 
 const Page = () => {
 
-  useAuth(); // authentication hook
+  useAuth(); 
 
   return (
     <div className='flex justify-center items-center'>

@@ -10,7 +10,7 @@ const TaskCards = ({ count }: Count) => {
         <div className='flex flex-col gap-2'>
             {
                 Array(count).fill('').map((_, index) => (
-                    <Task />
+                    <Task index={index} />
                 ))
             }
         </div>
