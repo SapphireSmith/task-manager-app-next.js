@@ -8,16 +8,10 @@ First, clone the project:
 git clone < - url goes here - >
 ```
 
-Second, run the development server:
+Second, Install the dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
