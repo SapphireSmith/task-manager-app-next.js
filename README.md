@@ -20,7 +20,7 @@ Third, Run the project:
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) On your browser to view the pproject.
+Open [http://localhost:3000](http://localhost:3000) On your browser to view the project.
 
 
 
